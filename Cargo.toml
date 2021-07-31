@@ -1,13 +1,13 @@
 [package]
 authors = ["Alexander Jaust <alexander.jaust@gmail.com>"]
-build = "main.rs"
+#build = "main.rs"
 name = "rust-precice"
 link = "precice"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+libc = "0.2"
 
 [build-dependencies]
-bindgen = "*"
-
-[dependencies]
+cc = "1.0"
