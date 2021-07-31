@@ -4,9 +4,9 @@ mod precice_bindings;
 //pub mod precice;
 
 //use precice::libc::c_char;
-use precice::libc::{c_int};
+use precice::libc::{c_int, c_double};
 use std::ffi::CString;
-use std::ffi::CStr;
+//use std::ffi::CStr;
 
 //Do not implement part with comminicator here
 //pub fn create_solver_interface_with_communicatorparticipant_name: String, config_file_name: String, rank: i8, size: i8, ???
@@ -197,4 +197,50 @@ pub fn get_data_id( data_name: String, mesh_id: i32) -> i32
 pub fn map_read_data_to( to_mesh_id: i32)
 {
     unsafe {  precice_bindings::precicec_mapReadDataTo( to_mesh_id as c_int ) };
+}
+
+pub fn map_write_data_to( from_mesh_id: i32)
+{
+    unsafe {  precice_bindings::precicec_mapWriteDataFrom( from_mesh_id as c_int ) };
+}
+
+pub fn write_block_vector_data( data_id: i32, value_indices: &[i32], values: &[f64] )
+{
+    unsafe { precice_bindings::precicec_writeBlockVectorData( data_id as c_int, value_indices.len() as c_int, value_indices.as_ptr(), values.as_ptr() ) };
+}
+
+pub fn write_vector_data( data_id: i32, value_index: i32, values: &[f64] )
+{
+    unsafe { precice_bindings::precicec_writeVectorData( data_id as c_int, value_index as c_int, values.as_ptr() ) };
+}
+
+pub fn write_block_scalar_data( data_id: i32, value_indices: &[i32], values: &[f64] )
+{
+    unsafe { precice_bindings::precicec_writeBlockScalarData( data_id as c_int, value_indices.len() as c_int, value_indices.as_ptr(), values.as_ptr() ) };
+}
+
+pub fn write_scalar_data( data_id: i32, value_index: i32, value: f64 )
+{
+    unsafe { precice_bindings::precicec_writeScalarData( data_id as c_int, value_index as c_int, value as c_double ) };
+}
+
+pub fn read_block_vector_data( data_id: i32, value_indices: &[i32], values: &mut [f64] )
+{
+    unsafe { precice_bindings::precicec_readBlockVectorData( data_id as c_int, value_indices.len() as c_int, value_indices.as_ptr(), values.as_mut_ptr() ) };
+}
+
+pub fn read_vector_data( data_id: i32, value_index: i32, values: &mut [f64] )
+{
+    unsafe { precice_bindings::precicec_readVectorData( data_id as c_int, value_index as c_int, values.as_mut_ptr() ) };
+}
+
+
+pub fn read_block_scalar_data( data_id: i32, value_indices: &[i32], values: &mut [f64] )
+{
+    unsafe { precice_bindings::precicec_readBlockScalarData( data_id as c_int, value_indices.len() as c_int, value_indices.as_ptr(), values.as_mut_ptr() ) };
+}
+
+pub fn read_scalar_data( data_id: i32, value_index: i32, value: &mut f64 )
+{
+    unsafe { precice_bindings::precicec_readScalarData( data_id as c_int, value_index as c_int, value ) };
 }
