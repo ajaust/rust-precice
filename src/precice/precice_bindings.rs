@@ -219,12 +219,12 @@ extern "C" {
 extern "C" {
     pub fn precicec_getVersionInformation() -> *const ::std::os::raw::c_char;
 }
-extern "C" {
-    pub fn precicec_actionWriteInitialData() -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn precicec_actionWriteIterationCheckpoint() -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn precicec_actionReadIterationCheckpoint() -> *const ::std::os::raw::c_char;
-}
+//extern "C" {
+//    pub fn precicec_actionWriteInitialData() -> *const ::std::os::raw::c_char;
+//}
+//extern "C" {
+//    pub fn precicec_actionWriteIterationCheckpoint() -> *const ::std::os::raw::c_char;
+//}
+//extern "C" {
+//    pub fn precicec_actionReadIterationCheckpoint() -> *const ::std::os::raw::c_char;
+//}

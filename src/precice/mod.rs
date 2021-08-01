@@ -6,10 +6,23 @@ mod precice_bindings;
 //use precice::libc::c_char;
 use precice::libc::{c_int, c_double};
 use std::ffi::CString;
-//use std::ffi::CStr;
+use std::ffi::CStr;
 
 //Do not implement part with comminicator here
 //pub fn create_solver_interface_with_communicatorparticipant_name: String, config_file_name: String, rank: i8, size: i8, ???
+
+
+fn create_rust_string_from_c_str( string_to_convert: *const ::std::os::raw::c_char ) -> String
+{
+    let c_str: &CStr = unsafe { CStr::from_ptr(string_to_convert) };
+    let str_slice: &str = c_str.to_str().unwrap();
+    let str_buf: String = str_slice.to_owned();
+    str_buf
+}
+
+//let test = unsafe{ precice_bindings::precicec_getVersionInformation() };
+//static version_information : String = create_rust_string_from_c_str(unsafe{ precice_bindings::precicec_getVersionInformation() });
+//static version_information : String;
 
 pub fn create_solver_interface( participant_name: String, config_file_name: String, rank: i32, size: i32 )
 {
@@ -20,6 +33,7 @@ pub fn create_solver_interface( participant_name: String, config_file_name: Stri
 
 pub fn precice_initialize() -> f64
 {
+    //version_information = create_rust_string_from_c_str(unsafe{ precice_bindings::precicec_getVersionInformation() });
     let dt = unsafe { precice_bindings::precicec_initialize() };
     dt
 }
@@ -243,4 +257,10 @@ pub fn read_block_scalar_data( data_id: i32, value_indices: &[i32], values: &mut
 pub fn read_scalar_data( data_id: i32, value_index: i32, value: &mut f64 )
 {
     unsafe { precice_bindings::precicec_readScalarData( data_id as c_int, value_index as c_int, value ) };
+}
+
+pub fn get_version_information() -> String
+{
+    let version_string = create_rust_string_from_c_str( unsafe{ precice_bindings::precicec_getVersionInformation() } );
+    version_string
 }
